@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :sessions
+  resources :promotions
   resources :classrooms
   resources :categories
   resources :courses

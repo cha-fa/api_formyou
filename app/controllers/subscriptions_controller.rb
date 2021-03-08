@@ -56,7 +56,7 @@ class SubscriptionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def subscription_params
-      params.require(:subscription).permit(:user_id, :note, :session_id)
+      params.require(:subscription).permit(:user_id, :note, :promotion)
     end
 
     def check_if_allowed

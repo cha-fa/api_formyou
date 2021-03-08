@@ -12,8 +12,8 @@ ActiveRecord::Base.connection.reset_pk_sequence!(Subscription.table_name)
 Course.destroy_all
 ActiveRecord::Base.connection.reset_pk_sequence!(Course.table_name)
 
-Session.destroy_all
-ActiveRecord::Base.connection.reset_pk_sequence!(Session.table_name)
+Promotion.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!(Promotion.table_name)
 
 Category.destroy_all
 ActiveRecord::Base.connection.reset_pk_sequence!(Category.table_name)
@@ -99,23 +99,23 @@ end
 puts "-------------------- Classroom table --------------------"
 tp Classroom.all
 
-#Generate sessions
+#Generate promotions
 
-  10.times do |session|
-    Session.create(
+  10.times do |promotion|
+    Promotion.create(
       start_date: Faker::Date.between(from: Date.today, to: Date.today + 600.days),
       course: Course.all.sample,
       classroom: Classroom.all.sample)
   end
 
-  puts "-------------------- Session table --------------------"
-  tp Session.all
+  puts "-------------------- Promotion table --------------------"
+  tp Promotion.all
 
 #Generate subscriptions
 
 5.times do |subscription|
   Subscription.create(
-    session: Session.all.sample,
+    promotion: Promotion.all.sample,
     student: User.students.sample)
 end
 
