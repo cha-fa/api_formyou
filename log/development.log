@@ -1,0 +1,224 @@
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1462735549497066600)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateActiveStorageTables (20210303125145)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.5ms)[0m  [1m[35mDROP TABLE "active_storage_variant_records"[0m
+  [1m[35m (2.3ms)[0m  [1m[35mDROP TABLE "active_storage_attachments"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mDROP TABLE "active_storage_blobs"[0m
+  [1m[36mActiveRecord::SchemaMigration Destroy (0.5ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20210303125145"]]
+  [1m[36mTRANSACTION (5.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePosts (20210303124840)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.1ms)[0m  [1m[35mDROP TABLE "posts"[0m
+  [1m[36mActiveRecord::SchemaMigration Destroy (0.5ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20210303124840"]]
+  [1m[36mTRANSACTION (4.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPropertiesToUser (20210303124618)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.3ms)[0m  [1m[35mALTER TABLE "users" DROP COLUMN "bio"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "users" DROP COLUMN "username"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" DROP COLUMN "last_name"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" DROP COLUMN "first_name"[0m
+  [1m[36mActiveRecord::SchemaMigration Destroy (0.4ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20210303124618"]]
+  [1m[36mTRANSACTION (5.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1462735549497066600)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.4ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mAllowlistedJwt Destroy (0.4ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 1]]
+  [1m[36mUser Destroy (0.5ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 1]]
+  [1m[36mTRANSACTION (3.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.3ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 2]]
+  [1m[36mAllowlistedJwt Destroy (0.4ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 2]]
+  [1m[36mAllowlistedJwt Destroy (0.3ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 5]]
+  [1m[36mAllowlistedJwt Destroy (0.4ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 8]]
+  [1m[36mUser Destroy (0.6ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 2]]
+  [1m[36mTRANSACTION (3.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.3ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 4]]
+  [1m[36mAllowlistedJwt Destroy (0.2ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 4]]
+  [1m[36mUser Destroy (0.3ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 4]]
+  [1m[36mTRANSACTION (3.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.5ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 5]]
+  [1m[36mAllowlistedJwt Destroy (0.4ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 6]]
+  [1m[36mUser Destroy (0.4ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 5]]
+  [1m[36mTRANSACTION (5.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.5ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 6]]
+  [1m[36mAllowlistedJwt Destroy (0.3ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 7]]
+  [1m[36mUser Destroy (0.4ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 6]]
+  [1m[36mTRANSACTION (3.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.4ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 7]]
+  [1m[36mAllowlistedJwt Destroy (0.8ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 9]]
+  [1m[36mUser Destroy (0.8ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 7]]
+  [1m[36mTRANSACTION (3.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.3ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 8]]
+  [1m[36mAllowlistedJwt Destroy (0.3ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 10]]
+  [1m[36mAllowlistedJwt Destroy (0.2ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 14]]
+  [1m[36mAllowlistedJwt Destroy (0.2ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 17]]
+  [1m[36mAllowlistedJwt Destroy (0.2ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 18]]
+  [1m[36mUser Destroy (0.3ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 8]]
+  [1m[36mTRANSACTION (3.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.3ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 10]]
+  [1m[36mAllowlistedJwt Destroy (0.3ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 11]]
+  [1m[36mUser Destroy (0.4ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 10]]
+  [1m[36mTRANSACTION (3.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.2ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 11]]
+  [1m[36mAllowlistedJwt Destroy (0.3ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 12]]
+  [1m[36mUser Destroy (0.4ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 11]]
+  [1m[36mTRANSACTION (3.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.4ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 12]]
+  [1m[36mAllowlistedJwt Destroy (0.4ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 13]]
+  [1m[36mUser Destroy (0.4ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 12]]
+  [1m[36mTRANSACTION (3.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.2ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 18]]
+  [1m[36mAllowlistedJwt Destroy (0.3ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 16]]
+  [1m[36mUser Destroy (0.4ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 18]]
+  [1m[36mTRANSACTION (3.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Load (0.2ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1[0m  [["user_id", 19]]
+  [1m[36mUser Destroy (0.4ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = $1[0m  [["id", 19]]
+  [1m[36mTRANSACTION (3.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:51:50 +0100
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by RegistrationsController#create as */*
+  Parameters: {"user"=>{"email"=>"nouveau@nouveau.com", "password"=>"[FILTERED]"}, "registration"=>{"user"=>{"email"=>"nouveau@nouveau.com", "password"=>"[FILTERED]"}}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/registrations_controller.rb:7:in `create'
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "nouveau@nouveau.com"], ["encrypted_password", "$2a$12$OUKhIgxuqKpfvIT5h8279OUisZcGcc16mKrRoL/00L2g7UkwjqF4a"], ["created_at", "2021-03-04 11:51:51.225175"], ["updated_at", "2021-03-04 11:51:51.225175"]]
+  ↳ app/controllers/registrations_controller.rb:7:in `create'
+  [1m[36mTRANSACTION (4.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/registrations_controller.rb:7:in `create'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/registrations_controller.rb:8:in `create'
+  [1m[36mAllowlistedJwt Create (1.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "f0ef7ceb-a927-4f45-9cd6-c0f7349041f5"], ["exp", "2021-03-05 11:51:51"], ["user_id", 20]]
+  ↳ app/controllers/registrations_controller.rb:8:in `create'
+  [1m[36mTRANSACTION (4.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/registrations_controller.rb:8:in `create'
+Completed 200 OK in 306ms (Views: 0.4ms | ActiveRecord: 17.3ms | Allocations: 16063)
+
+
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mAllowlistedJwt Load (0.2ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+Started DELETE "/logout" for 127.0.0.1 at 2021-03-04 12:52:20 +0100
+Processing by SessionsController#destroy as */*
+  Parameters: {"session"=>{}}
+Filter chain halted as :verify_signed_out_user rendered or redirected
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms | Allocations: 134)
+
+
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 20], ["LIMIT", 1]]
+  [1m[36mAllowlistedJwt Load (0.6ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1 AND "allowlisted_jwts"."jti" = $2 AND "allowlisted_jwts"."aud" IS NULL LIMIT $3[0m  [["user_id", 20], ["jti", "f0ef7ceb-a927-4f45-9cd6-c0f7349041f5"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Destroy (0.5ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 25]]
+  [1m[36mTRANSACTION (3.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mAllowlistedJwt Load (0.4ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+Started POST "/login" for 127.0.0.1 at 2021-03-04 12:52:36 +0100
+Processing by SessionsController#create as */*
+  Parameters: {"user"=>{"email"=>"nouveau@nouveau.com", "password"=>"[FILTERED]"}, "session"=>{"user"=>{"email"=>"nouveau@nouveau.com", "password"=>"[FILTERED]"}}}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "nouveau@nouveau.com"], ["LIMIT", 1]]
+Completed 401 Unauthorized in 246ms (ActiveRecord: 0.8ms | Allocations: 1355)
+
+
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:52:50 +0100
+Processing by RegistrationsController#create as */*
+  Parameters: {"user"=>{"email"=>"tata@tata.com", "password"=>"[FILTERED]"}, "registration"=>{"user"=>{"email"=>"tata@tata.com", "password"=>"[FILTERED]"}}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/registrations_controller.rb:7:in `create'
+  [1m[36mUser Create (1.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "tata@tata.com"], ["encrypted_password", "$2a$12$h2VLi0t4zNTwoj4FMMnyPedGkj6/3R8NBZIQk2NODuSGRFu10IUBi"], ["created_at", "2021-03-04 11:52:50.739829"], ["updated_at", "2021-03-04 11:52:50.739829"]]
+  ↳ app/controllers/registrations_controller.rb:7:in `create'
+  [1m[36mTRANSACTION (5.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/registrations_controller.rb:7:in `create'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/registrations_controller.rb:8:in `create'
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "c551898a-fcfd-480e-8dc6-dfdf7deff143"], ["exp", "2021-03-05 11:52:50"], ["user_id", 21]]
+  ↳ app/controllers/registrations_controller.rb:8:in `create'
+  [1m[36mTRANSACTION (3.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/registrations_controller.rb:8:in `create'
+Completed 200 OK in 273ms (Views: 0.5ms | ActiveRecord: 10.6ms | Allocations: 4253)
+
+
+Started GET "/api/profile" for 127.0.0.1 at 2021-03-04 12:52:57 +0100
+Processing by Api::ProfileController#show as JSON
+  Parameters: {"profile"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 21], ["LIMIT", 1]]
+  [1m[36mAllowlistedJwt Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1 AND "allowlisted_jwts"."jti" = $2 AND "allowlisted_jwts"."aud" IS NULL LIMIT $3[0m  [["user_id", 21], ["jti", "c551898a-fcfd-480e-8dc6-dfdf7deff143"], ["LIMIT", 1]]
+Completed 200 OK in 10ms (Views: 0.6ms | ActiveRecord: 1.2ms | Allocations: 2168)
+
+
+Started GET "/api/profile" for 127.0.0.1 at 2021-03-04 12:53:00 +0100
+Processing by Api::ProfileController#show as JSON
+  Parameters: {"profile"=>{}}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 21], ["LIMIT", 1]]
+  [1m[36mAllowlistedJwt Exists? (2.4ms)[0m  [1m[34mSELECT 1 AS one FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1 AND "allowlisted_jwts"."jti" = $2 AND "allowlisted_jwts"."aud" IS NULL LIMIT $3[0m  [["user_id", 21], ["jti", "c551898a-fcfd-480e-8dc6-dfdf7deff143"], ["LIMIT", 1]]
+Completed 200 OK in 18ms (Views: 0.8ms | ActiveRecord: 3.7ms | Allocations: 2097)
+
+
+Started GET "/api/profile" for 127.0.0.1 at 2021-03-04 12:53:02 +0100
+Processing by Api::ProfileController#show as JSON
+  Parameters: {"profile"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 21], ["LIMIT", 1]]
+  [1m[36mAllowlistedJwt Exists? (1.3ms)[0m  [1m[34mSELECT 1 AS one FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1 AND "allowlisted_jwts"."jti" = $2 AND "allowlisted_jwts"."aud" IS NULL LIMIT $3[0m  [["user_id", 21], ["jti", "c551898a-fcfd-480e-8dc6-dfdf7deff143"], ["LIMIT", 1]]
+Completed 200 OK in 14ms (Views: 3.1ms | ActiveRecord: 1.9ms | Allocations: 2074)
+
+
+Started GET "/api/profile" for 127.0.0.1 at 2021-03-04 12:53:15 +0100
+Processing by Api::ProfileController#show as JSON
+  Parameters: {"profile"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 21], ["LIMIT", 1]]
+  [1m[36mAllowlistedJwt Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1 AND "allowlisted_jwts"."jti" = $2 AND "allowlisted_jwts"."aud" IS NULL LIMIT $3[0m  [["user_id", 21], ["jti", "c551898a-fcfd-480e-8dc6-dfdf7deff143"], ["LIMIT", 1]]
+Completed 200 OK in 10ms (Views: 0.6ms | ActiveRecord: 1.2ms | Allocations: 2074)
+
+
+Started DELETE "/logout" for 127.0.0.1 at 2021-03-04 12:53:17 +0100
+Processing by SessionsController#destroy as */*
+  Parameters: {"session"=>{}}
+Filter chain halted as :verify_signed_out_user rendered or redirected
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms | Allocations: 57)
+
+
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 21], ["LIMIT", 1]]
+  [1m[36mAllowlistedJwt Load (0.3ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1 AND "allowlisted_jwts"."jti" = $2 AND "allowlisted_jwts"."aud" IS NULL LIMIT $3[0m  [["user_id", 21], ["jti", "c551898a-fcfd-480e-8dc6-dfdf7deff143"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Destroy (1.4ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 26]]
+  [1m[36mTRANSACTION (3.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" /* loading for inspect */ LIMIT $1[0m  [["LIMIT", 11]]
+Started POST "/login" for 127.0.0.1 at 2021-03-04 12:53:33 +0100
+Processing by SessionsController#create as */*
+  Parameters: {"user"=>{"email"=>"tata@tata.com", "password"=>"[FILTERED]"}, "session"=>{"user"=>{"email"=>"tata@tata.com", "password"=>"[FILTERED]"}}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "tata@tata.com"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "0e3f1bd5-4376-40f2-9ca8-688fbfdb6fa1"], ["exp", "2021-03-05 11:53:33"], ["user_id", 21]]
+  [1m[36mTRANSACTION (5.5ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 259ms (Views: 0.3ms | ActiveRecord: 6.5ms | Allocations: 4249)
+
+
+Started DELETE "/logout" for 127.0.0.1 at 2021-03-04 12:53:35 +0100
+Processing by SessionsController#destroy as */*
+  Parameters: {"session"=>{}}
+Filter chain halted as :verify_signed_out_user rendered or redirected
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms | Allocations: 57)
+
+
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 21], ["LIMIT", 1]]
+  [1m[36mAllowlistedJwt Load (0.2ms)[0m  [1m[34mSELECT "allowlisted_jwts".* FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."user_id" = $1 AND "allowlisted_jwts"."jti" = $2 AND "allowlisted_jwts"."aud" IS NULL LIMIT $3[0m  [["user_id", 21], ["jti", "0e3f1bd5-4376-40f2-9ca8-688fbfdb6fa1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAllowlistedJwt Destroy (0.2ms)[0m  [1m[31mDELETE FROM "allowlisted_jwts" WHERE "allowlisted_jwts"."id" = $1[0m  [["id", 27]]
+  [1m[36mTRANSACTION (4.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT version()[0m

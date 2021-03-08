@@ -1,0 +1,1091 @@
+  [1m[35m (73.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "THPgram_api_test"[0m
+  [1m[35m (309.1ms)[0m  [1m[35mCREATE DATABASE "THPgram_api_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "allowlisted_jwts" CASCADE[0m
+  [1m[35m (28.6ms)[0m  [1m[35mCREATE TABLE "allowlisted_jwts" ("id" bigserial primary key, "jti" character varying NOT NULL, "aud" character varying, "exp" timestamp NOT NULL, "user_id" bigint NOT NULL)[0m
+  [1m[35m (12.8ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_allowlisted_jwts_on_jti" ON "allowlisted_jwts" ("jti")[0m
+  [1m[35m (12.7ms)[0m  [1m[35mCREATE INDEX "index_allowlisted_jwts_on_user_id" ON "allowlisted_jwts" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (25.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (10.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (12.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (5.9ms)[0m  [1m[35mALTER TABLE "allowlisted_jwts" ADD CONSTRAINT "fk_rails_77afa78cd5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ ON DELETE CASCADE[0m
+  [1m[35m (22.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (3.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20210303105927)[0m
+  [1m[35m (3.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20210303105551);
+
+[0m
+  [1m[35m (21.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "test"], ["created_at", "2021-03-04 11:29:55.923553"], ["updated_at", "2021-03-04 11:29:55.923553"]]
+  [1m[36mTRANSACTION (3.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "e2b36704bfc42e2a8d856f8791d313651047c842"], ["created_at", "2021-03-04 11:29:55.933191"], ["updated_at", "2021-03-04 11:29:55.933191"]]
+  [1m[36mTRANSACTION (3.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:30:06 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$/TCO9W6jcs.MXyjj3dKoSOmBo1gdyhxN3MOufJWjqJP5i/W2Ld68y"], ["created_at", "2021-03-04 11:30:06.702712"], ["updated_at", "2021-03-04 11:30:06.702712"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.8ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "370fd5a2-217d-472d-a9f1-29a7a4954d2e"], ["exp", "2021-03-05 11:30:06"], ["user_id", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 30ms (Views: 0.3ms | ActiveRecord: 3.8ms | Allocations: 12472)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:30:06 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$mjvTnSgm3cJAomwGvy3U/enw0RV8wy8A3nAIOkk5oRAHI6wPLqEOO"], ["created_at", "2021-03-04 11:30:06.730671"], ["updated_at", "2021-03-04 11:30:06.730671"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "78e1b691-c361-487c-ad42-608ab4373d7b"], ["exp", "2021-03-05 11:30:06"], ["user_id", 2]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.0ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:30:06 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$LG9hTzvCVE8uU9btx4bvd.35zLEjqyZ1DLY8kSVUFWXdk27Wc8Msa"], ["created_at", "2021-03-04 11:30:06.746082"], ["updated_at", "2021-03-04 11:30:06.746082"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "7ac0f6d2-a46b-4fdd-8176-edd64777b44f"], ["exp", "2021-03-05 11:30:06"], ["user_id", 3]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.2ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$abrz12UwxZOaYn6UB7zjeu3uAzV/fY7MPMFhsdZKxCASNfLShZ5UC"], ["created_at", "2021-03-04 11:30:06.755024"], ["updated_at", "2021-03-04 11:30:06.755024"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:30:06 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.9ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$rnPiit8js6uTF1Qm3WhuP.56zg37cKwGi6/4bPlvyda10uOG.RDeG"], ["created_at", "2021-03-04 11:30:06.761586"], ["updated_at", "2021-03-04 11:30:06.761586"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 1.2ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:34:14 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$va8vtHWFrG/ekz541HXbL.lsxBizbJi9b85mSep6RYNFbNmyZOxQW"], ["created_at", "2021-03-04 11:34:14.151603"], ["updated_at", "2021-03-04 11:34:14.151603"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "3f88dfde-82d1-4de9-8307-e0be1ae37551"], ["exp", "2021-03-05 11:34:14"], ["user_id", 6]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 19ms (Views: 0.5ms | ActiveRecord: 4.1ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:34:14 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$.FoYqrxr4hfEV44MJS3Lm.ip0cU6AniTCgO9NPzzRCsd.rVEGUeuu"], ["created_at", "2021-03-04 11:34:14.174164"], ["updated_at", "2021-03-04 11:34:14.174164"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "dae33c1a-c1da-422e-830f-8054adb863fb"], ["exp", "2021-03-05 11:34:14"], ["user_id", 7]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.5ms | ActiveRecord: 1.3ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:34:14 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$/B26N08KaVAQM7tnawWtiOrfzZC3M2TEWoHNRvS2wdANBU.pq5.CW"], ["created_at", "2021-03-04 11:34:14.187449"], ["updated_at", "2021-03-04 11:34:14.187449"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "03cdd62c-425f-431a-a9e4-2d993c9cfa82"], ["exp", "2021-03-05 11:34:14"], ["user_id", 8]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 9ms (Views: 0.5ms | ActiveRecord: 1.8ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$nD/ZI3bB.qoVgSutXYCQJ.Ib7FME77cL6boAKVdbCdSX/7YGXlF8q"], ["created_at", "2021-03-04 11:34:14.198820"], ["updated_at", "2021-03-04 11:34:14.198820"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:34:14 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$6VgSjjmMAfXZvtdtJzSEkufY4WLas4vmLHtV.m7aBYddya9zlKmMm"], ["created_at", "2021-03-04 11:34:14.205529"], ["updated_at", "2021-03-04 11:34:14.205529"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.9ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.8ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$rnkhp4JQsFsPvWwdm4pgwuuCTkyFlFgP0tp5VHldMKg7t1JVTWv2C"], ["created_at", "2021-03-04 11:34:44.129690"], ["updated_at", "2021-03-04 11:34:44.129690"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:34:44 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$7A4IqAS/.NeDl3eY5WwXxeaRhrwmFvN7GNLp8Be5SlP0obRIDzvIq"], ["created_at", "2021-03-04 11:34:44.145209"], ["updated_at", "2021-03-04 11:34:44.145209"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 1.0ms | Allocations: 3557)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:35:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$7kEPD5I23Z5nxXrGDt/1o.5l4hrOOe3kB82eLqkFvyiD2LByKynnq"], ["created_at", "2021-03-04 11:35:10.083044"], ["updated_at", "2021-03-04 11:35:10.083044"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "690cedda-2e8a-4c4d-83e3-3f0b252e20f5"], ["exp", "2021-03-05 11:35:10"], ["user_id", 13]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 19ms (Views: 0.3ms | ActiveRecord: 3.5ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:35:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$5kGiJWGBcYX0ZyhU9SfkduZHYwCbPt.y/zF79g1/H9Xwo803X3zdS"], ["created_at", "2021-03-04 11:35:10.105240"], ["updated_at", "2021-03-04 11:35:10.105240"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "927add0e-d7e7-431c-8b4c-9897fb6811cf"], ["exp", "2021-03-05 11:35:10"], ["user_id", 14]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.4ms | ActiveRecord: 1.4ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:35:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$QgE9rJYAcW/EGIYP/QW.fOIz/ZHR8c0OBl0vBHEcS/rCbJ1ciIMMm"], ["created_at", "2021-03-04 11:35:10.118967"], ["updated_at", "2021-03-04 11:35:10.118967"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "0802a940-afe1-4c96-885a-00f4502aa9cc"], ["exp", "2021-03-05 11:35:10"], ["user_id", 15]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.4ms | ActiveRecord: 1.2ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:35:21 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$uKu06iHy2C6Mm9B6JEs89eXTFkBtYEczcB0k7sAm5FlXhfNzbRJq."], ["created_at", "2021-03-04 11:35:21.934105"], ["updated_at", "2021-03-04 11:35:21.934105"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "b8611f87-dec0-4d97-8f34-6aab11515a2c"], ["exp", "2021-03-05 11:35:21"], ["user_id", 16]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 20ms (Views: 0.4ms | ActiveRecord: 3.8ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:35:21 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$1Z6ve6zZWC.6RvvrVb7sYOWNSLTLZSMDrgO6cg6hduPB9FM6rGLKG"], ["created_at", "2021-03-04 11:35:21.958187"], ["updated_at", "2021-03-04 11:35:21.958187"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "f59ca558-7750-4786-a648-c312e95865bb"], ["exp", "2021-03-05 11:35:21"], ["user_id", 17]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.4ms | ActiveRecord: 1.4ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:35:21 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$LN0cKcF8lhraRZfrwb00AuiT/bDjPhQ2Me7TiR9x6QdH2BmLYnHUy"], ["created_at", "2021-03-04 11:35:21.974006"], ["updated_at", "2021-03-04 11:35:21.974006"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.5ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "8f458211-1eb4-4e12-b0bc-03fab96fefe0"], ["exp", "2021-03-05 11:35:21"], ["user_id", 18]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.5ms | ActiveRecord: 1.4ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:12 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$wVA5Lx8CPmntXqn0U9oKNeq7BxOi/wf0RyDZW00wvnG2DnnUoJtfa"], ["created_at", "2021-03-04 11:36:12.919987"], ["updated_at", "2021-03-04 11:36:12.919987"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "78ab41d4-130f-45b9-b219-cc758a247d45"], ["exp", "2021-03-05 11:36:12"], ["user_id", 19]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 19ms (Views: 0.3ms | ActiveRecord: 3.9ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:12 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$iuXCJ5J6b4khjsmhY8HVguoJCQ5JoLJCUynQBgnsDr.S/INCTnLTy"], ["created_at", "2021-03-04 11:36:12.941158"], ["updated_at", "2021-03-04 11:36:12.941158"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "067dd263-23b2-4093-bd2e-a9036aacb2d5"], ["exp", "2021-03-05 11:36:12"], ["user_id", 20]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:12 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$ILoGvxMVJf.IB9EkelLnfe0seivBBRVZ8nU7kA4Q5iocGeZESTwWC"], ["created_at", "2021-03-04 11:36:12.953547"], ["updated_at", "2021-03-04 11:36:12.953547"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "85ea5c00-a4ad-4de2-abd7-e79c2928951d"], ["exp", "2021-03-05 11:36:12"], ["user_id", 21]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.4ms | ActiveRecord: 1.7ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$jfZZpEY9GeFLYW6fLq/QWu/jK8pw2DtX39B7KSOe88ByQ5gp.oStW"], ["created_at", "2021-03-04 11:36:12.963476"], ["updated_at", "2021-03-04 11:36:12.963476"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:12 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$rJ0dqGOTjT3RHn31v2Cx8enZcsfcd4/AVjDl.bIHcZdJgBovf1x36"], ["created_at", "2021-03-04 11:36:12.969277"], ["updated_at", "2021-03-04 11:36:12.969277"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.9ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$ZiPpyu5E8V6GcJYY.tEzeeSLV82BHDdox3oXeuqIqPx0HL37s9NZK"], ["created_at", "2021-03-04 11:36:33.536776"], ["updated_at", "2021-03-04 11:36:33.536776"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "2c5631ed-28c5-47c4-813b-caca7c65f3a7"], ["exp", "2021-03-05 11:36:33"], ["user_id", 24]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 19ms (Views: 0.3ms | ActiveRecord: 3.7ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$Zc.N05Bkgfm.fe78m/QLIumlCegsFaErErcu5aHBByYJ3v9nbhfoS"], ["created_at", "2021-03-04 11:36:33.557821"], ["updated_at", "2021-03-04 11:36:33.557821"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "ba8cc127-38c5-461e-8cc7-3cf111be4202"], ["exp", "2021-03-05 11:36:33"], ["user_id", 25]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$RcVMNfg1VrpNpA4DrwbjvecmcvyLrijOD9ZT3on1dVePQDL9ddfKu"], ["created_at", "2021-03-04 11:36:33.569930"], ["updated_at", "2021-03-04 11:36:33.569930"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.8ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "43248640-4cfd-43c6-8ae4-278cd6cf9f0d"], ["exp", "2021-03-05 11:36:33"], ["user_id", 26]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.5ms | ActiveRecord: 1.7ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$x7gQDwlL7RgREYoobtiSKOMNJly2nY0SYUUrfVNHiq8COUW6M2NJS"], ["created_at", "2021-03-04 11:36:33.580751"], ["updated_at", "2021-03-04 11:36:33.580751"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$HQB/fyOSinr5YaRLevdfBemONk4pjRaXB8kULwMvaHTWaUKHSyT6."], ["created_at", "2021-03-04 11:36:33.588704"], ["updated_at", "2021-03-04 11:36:33.588704"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 1.0ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:46 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$TJryT0Ssqh4jDW2Kkm0I6upUAwTMrnA4f8Asc0MQy3a.rYx6ymrjm"], ["created_at", "2021-03-04 11:36:46.841688"], ["updated_at", "2021-03-04 11:36:46.841688"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "798b51e2-4a9e-4f76-9915-3f8e85cad121"], ["exp", "2021-03-05 11:36:46"], ["user_id", 29]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 20ms (Views: 0.4ms | ActiveRecord: 4.4ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:46 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$2BLL5GgRHZj4v7.gUzUo6.lp4JdEEcoPi1TiLHou6DH5LPk2sQms."], ["created_at", "2021-03-04 11:36:46.865924"], ["updated_at", "2021-03-04 11:36:46.865924"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.5ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "91704d15-f702-4c0d-8b2a-1889e71fcedb"], ["exp", "2021-03-05 11:36:46"], ["user_id", 30]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.4ms | ActiveRecord: 1.5ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:46 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$C3uXmaeV4u9uboszfDBm8.3C3S1/lolbE0qhrE8K85Veh.OGrzmvu"], ["created_at", "2021-03-04 11:36:46.882304"], ["updated_at", "2021-03-04 11:36:46.882304"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "d4c97224-7ba2-4ba1-aff7-468fb74eab9b"], ["exp", "2021-03-05 11:36:46"], ["user_id", 31]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 9ms (Views: 0.4ms | ActiveRecord: 1.6ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$kYVIKcj3yeYa8D0mxsxfuOJON0GLjqYs6KvdpPrganLOoEQfJ9AWG"], ["created_at", "2021-03-04 11:36:46.892645"], ["updated_at", "2021-03-04 11:36:46.892645"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:36:46 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$mP8XTBBtkFuwAFPSb9DlnOi5s7PhY4OzTvJgI783dYUQjaTMQB/A6"], ["created_at", "2021-03-04 11:36:46.899015"], ["updated_at", "2021-03-04 11:36:46.899015"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.9ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:37:08 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$kaCc/3ZXCOwxkzLJB.YpqOpUKsp7AaBONX5lfK3DhOPKN76OsMEE2"], ["created_at", "2021-03-04 11:37:08.803081"], ["updated_at", "2021-03-04 11:37:08.803081"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "c8986b8c-23e0-4cd4-b908-d044c8a21e8f"], ["exp", "2021-03-05 11:37:08"], ["user_id", 34]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 18ms (Views: 0.4ms | ActiveRecord: 3.5ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:37:08 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$Js66mTl.48Y5rug9b7xwT.0sliZuEUqvcradnYmXezuxOKgfdPGDG"], ["created_at", "2021-03-04 11:37:08.823136"], ["updated_at", "2021-03-04 11:37:08.823136"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "5b16e4cf-9194-4b49-80b5-85e52b8417bc"], ["exp", "2021-03-05 11:37:08"], ["user_id", 35]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 1.0ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:37:08 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$WktGS0xQQF80Jv3uXwJ5RuhSSdj4lN5acOpZ9H0b1YRxEPbp/NPGe"], ["created_at", "2021-03-04 11:37:08.835781"], ["updated_at", "2021-03-04 11:37:08.835781"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "e001c3c6-76fa-433a-ae0f-248c782e2a3a"], ["exp", "2021-03-05 11:37:08"], ["user_id", 36]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.4ms | ActiveRecord: 1.3ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$y8WmAy8p6cSgPSFApK4Vd.pEV3W3jjEwzL3JOKeIYjxOba9quDG3W"], ["created_at", "2021-03-04 11:37:08.844662"], ["updated_at", "2021-03-04 11:37:08.844662"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:37:08 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$gyM06zp/j00y4hOSq6aAqOJQxvbSi3OFRp/zxcxPw.o.wLUnQoY9K"], ["created_at", "2021-03-04 11:37:08.852487"], ["updated_at", "2021-03-04 11:37:08.852487"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.8ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:37:31 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$3iz2.MtQcQLRi.H/GpnkKu4yIAqPRIKR1gcjYHzXTMme9ZF7NsJr2"], ["created_at", "2021-03-04 11:37:31.468560"], ["updated_at", "2021-03-04 11:37:31.468560"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "9f855a79-c4cb-47d1-99d3-312030d973bf"], ["exp", "2021-03-05 11:37:31"], ["user_id", 39]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 21ms (Views: 0.4ms | ActiveRecord: 3.9ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:37:31 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$ungAqcuTArKP6CNGMGoG1uaERaUixKQjCjiF7in0cnUwGFgtWTmfm"], ["created_at", "2021-03-04 11:37:31.490673"], ["updated_at", "2021-03-04 11:37:31.490673"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "c6c2dbae-5f8d-466f-9b95-1ad4e6c09d99"], ["exp", "2021-03-05 11:37:31"], ["user_id", 40]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:37:31 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$6SskMgin/j5wk3uK7cWOw.GdpAuhEkdtX7LqR23cxRbXp82F/.ztS"], ["created_at", "2021-03-04 11:37:31.503152"], ["updated_at", "2021-03-04 11:37:31.503152"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "0c0f4575-d0a4-4401-a5e2-2bda80ae8a8a"], ["exp", "2021-03-05 11:37:31"], ["user_id", 41]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.6ms | ActiveRecord: 1.2ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$XmWsAH1a/T7aeikcrM/tzep2gBzHynsKZZXKlB6/cS7zRwSyWz80i"], ["created_at", "2021-03-04 11:37:31.514140"], ["updated_at", "2021-03-04 11:37:31.514140"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:37:31 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.8ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$dUoNgN0dMKpv7uM42DNQTe6NNt5JQmiCVQ8XdDgzO1q1S74r7UvdO"], ["created_at", "2021-03-04 11:37:31.520330"], ["updated_at", "2021-03-04 11:37:31.520330"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 1.1ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:38:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$/ShaTNErN3pAtq33hMM/2.jWsS6JUI8pgCcagXPxsLcINT8OsRWH2"], ["created_at", "2021-03-04 11:38:10.349864"], ["updated_at", "2021-03-04 11:38:10.349864"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.8ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "46645672-6d85-47a6-a481-ce3a9ebd6176"], ["exp", "2021-03-05 11:38:10"], ["user_id", 44]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 22ms (Views: 0.5ms | ActiveRecord: 4.3ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:38:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$rp9xxknZPqm.ne4sFdTDruGRrQ6R7.B/b2pAk78jW2teq8S3HkA7C"], ["created_at", "2021-03-04 11:38:10.373863"], ["updated_at", "2021-03-04 11:38:10.373863"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "36873841-9320-4bab-b8cb-c30bd10b7369"], ["exp", "2021-03-05 11:38:10"], ["user_id", 45]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:38:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$O/VUfbjR8.3dhtsJYI2cT.u79p2HXcW2S9I4BubNhI7qGDVF57V0m"], ["created_at", "2021-03-04 11:38:10.387382"], ["updated_at", "2021-03-04 11:38:10.387382"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "fc4d5b47-a9d7-4441-a555-dc4b1cdee1fc"], ["exp", "2021-03-05 11:38:10"], ["user_id", 46]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$Ptw8GpMwr7YuoEE53UbWLOUnKZ2gaFQKUEGGerpFSXddtqeTxANjG"], ["created_at", "2021-03-04 11:38:10.395939"], ["updated_at", "2021-03-04 11:38:10.395939"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:38:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$0nmw/4a1JuYoOgA0jnVXNercjXFemoL.IqHAGfKTb7aC0wlIi0zwe"], ["created_at", "2021-03-04 11:38:10.402944"], ["updated_at", "2021-03-04 11:38:10.402944"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 1.0ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:38:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$P16DZ/7IRf1Z48Cc6XXQw.2mgi.AqmmLAhsKEXVdqoaZ2Cx9SbW6K"], ["created_at", "2021-03-04 11:38:33.855866"], ["updated_at", "2021-03-04 11:38:33.855866"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "eef1aedb-09ed-4353-9971-4a20b67907aa"], ["exp", "2021-03-05 11:38:33"], ["user_id", 49]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 20ms (Views: 0.4ms | ActiveRecord: 4.2ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:38:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$8x3ateJEfdyR0yVfzxoPr.pY4jeStSnYce4yiLZPTeFaYEWQKfGSm"], ["created_at", "2021-03-04 11:38:33.880152"], ["updated_at", "2021-03-04 11:38:33.880152"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "9baad407-2e19-4ef1-aaec-bb53de0240ce"], ["exp", "2021-03-05 11:38:33"], ["user_id", 50]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.4ms | ActiveRecord: 1.0ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:38:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$o8tpwkAd6VZuWOV.skUUb.9hQDbCnPl0l1aKYOs7Ynz0Gn46nKWI2"], ["created_at", "2021-03-04 11:38:33.894612"], ["updated_at", "2021-03-04 11:38:33.894612"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "a3b5086e-433e-4cba-8dd3-3cbcb790dda3"], ["exp", "2021-03-05 11:38:33"], ["user_id", 51]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.4ms | ActiveRecord: 1.2ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$EVuvZWpHfuWoLBa9OtdiG.Qx7276h84uvhqDaJQwIH37fSSr/2Yxy"], ["created_at", "2021-03-04 11:38:33.904829"], ["updated_at", "2021-03-04 11:38:33.904829"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:38:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$2NL1sutG1oOjrT4aA5dkV.su0nmgIYrGS5ZtWOzHIUe3Ax45J5Bmq"], ["created_at", "2021-03-04 11:38:33.912005"], ["updated_at", "2021-03-04 11:38:33.912005"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 1.0ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:39:04 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$IhKn75MwnT4izAqL325/qOAPbZ2LEXdGN.CMgLeLQRiqg81YH1vDW"], ["created_at", "2021-03-04 11:39:04.924054"], ["updated_at", "2021-03-04 11:39:04.924054"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "b0758bc6-4e73-4a1d-8d74-76f544f76dcc"], ["exp", "2021-03-05 11:39:04"], ["user_id", 54]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 20ms (Views: 0.4ms | ActiveRecord: 4.2ms | Allocations: 8621)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:39:04 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$Gl.uMLttzR8LlcIhRTasAe2BtDi03UTp5L7tAxKeb/xNrsQEW5zHK"], ["created_at", "2021-03-04 11:39:04.946832"], ["updated_at", "2021-03-04 11:39:04.946832"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "3db80470-6d23-41fe-8e59-deaa23f82c3f"], ["exp", "2021-03-05 11:39:04"], ["user_id", 55]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.3ms | ActiveRecord: 1.7ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:39:04 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$qGvw3vc2Lh10VfLjoxIesuTqwCGt/uOVcT9Adwjek.ajiDBSwoMCW"], ["created_at", "2021-03-04 11:39:04.959796"], ["updated_at", "2021-03-04 11:39:04.959796"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "6cde4978-83e5-4416-ab97-0053edfa725f"], ["exp", "2021-03-05 11:39:04"], ["user_id", 56]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.4ms | ActiveRecord: 1.3ms | Allocations: 1378)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$Wn.6MZ7DfFXcBt37U5iuseC1HAuYUSRTel.nlWp563kg33H4mKxea"], ["created_at", "2021-03-04 11:39:04.972432"], ["updated_at", "2021-03-04 11:39:04.972432"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:39:04 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"new-user@user.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (1.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "new-user@user.com"], ["encrypted_password", "$2a$04$kVa.Jq9cOwee6VcQqdI/8.4B.qxWslUuPAZ5i9tl6CvCBMEP6aTDi"], ["created_at", "2021-03-04 11:39:04.979361"], ["updated_at", "2021-03-04 11:39:04.979361"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 1.5ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:40:45 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$dGcA0YsiZiAjnmkG4ReG6uyTBqbAyLsgDVmxvALV1p6zqVZvVi36i"], ["created_at", "2021-03-04 11:40:45.514954"], ["updated_at", "2021-03-04 11:40:45.514954"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "6843a00b-cd50-4354-bc31-1f16add8bb76"], ["exp", "2021-03-05 11:40:45"], ["user_id", 59]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 27ms (Views: 0.3ms | ActiveRecord: 6.2ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:40:45 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$o76icpCfHKOkD86M80ohGOiTHLw7dwhuW9bjL3R2IJHJFMSUVuy82"], ["created_at", "2021-03-04 11:40:45.533514"], ["updated_at", "2021-03-04 11:40:45.533514"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "b7ca6f96-dee2-44a8-84c7-7c142c425dd3"], ["exp", "2021-03-05 11:40:45"], ["user_id", 60]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.0ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:41:39 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$0N8T6kVpdlyAzyd/3aZpbuHk0yFJw5W1A1qZXkvqObHbwNh6yIR0u"], ["created_at", "2021-03-04 11:41:39.436015"], ["updated_at", "2021-03-04 11:41:39.436015"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "6dc73a94-ce1d-4766-a480-d5cd5492af63"], ["exp", "2021-03-05 11:41:39"], ["user_id", 61]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 31ms (Views: 0.4ms | ActiveRecord: 6.9ms | Allocations: 13137)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:41:39 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$k2eKNopYOnd9cAN/PAaxuOlP674GOhrtrJmVOIfYIyYYFDC9JcFKO"], ["created_at", "2021-03-04 11:41:39.457264"], ["updated_at", "2021-03-04 11:41:39.457264"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "b84c9e51-d098-442a-a660-3372adbf94a2"], ["exp", "2021-03-05 11:41:39"], ["user_id", 62]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.0ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:42:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$5nbQki0u.qrpwfbmHepB0e1BXGfu7NkU4X3pm75Lobg/fqLKDXjBu"], ["created_at", "2021-03-04 11:42:33.680987"], ["updated_at", "2021-03-04 11:42:33.680987"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "88797f2f-68c0-423b-b5d6-7a5ce7edf0c2"], ["exp", "2021-03-05 11:42:33"], ["user_id", 63]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 28ms (Views: 0.4ms | ActiveRecord: 6.4ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:42:33 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$mSSvBNz1Pbj2HMwNlZWI4u8XX.mMFk3dSWwjUP0iixRDtz1P0U.oW"], ["created_at", "2021-03-04 11:42:33.701158"], ["updated_at", "2021-03-04 11:42:33.701158"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "f6cdf2d6-a2c6-42a8-9786-51dd1972493c"], ["exp", "2021-03-05 11:42:33"], ["user_id", 64]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:43:50 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$W3YtOhwFofr9UElzSdltVOwXuQviZU3qvr6yrUGkTO8Xnngt41Ke6"], ["created_at", "2021-03-04 11:43:50.652209"], ["updated_at", "2021-03-04 11:43:50.652209"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.9ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "a861b4db-3270-417f-a73c-341944442a90"], ["exp", "2021-03-05 11:43:50"], ["user_id", 65]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 31ms (Views: 0.5ms | ActiveRecord: 7.4ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:43:50 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$8Uvk3/4O7jX0vdgQb5xwLOk1wEoUu9WerTP6k1aXLCShYf6rn.t1q"], ["created_at", "2021-03-04 11:43:50.675486"], ["updated_at", "2021-03-04 11:43:50.675486"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.5ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "5cc45ad1-2ddc-40be-bbd1-73b3b17cc5d2"], ["exp", "2021-03-05 11:43:50"], ["user_id", 66]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.4ms | ActiveRecord: 1.3ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:44:00 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$TLJBGH1ve6d9vszVymNVqOE0fUNBdY3oQ3ntdYYEr9KVFgHd7Eat2"], ["created_at", "2021-03-04 11:44:00.828723"], ["updated_at", "2021-03-04 11:44:00.828723"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "b7e44ff7-f273-4348-8649-9a0839cde5e1"], ["exp", "2021-03-05 11:44:00"], ["user_id", 67]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 30ms (Views: 0.3ms | ActiveRecord: 6.1ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:44:00 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$R6Tdh.Sz8BzqfmqSFWHqu.uB7dwN./l9ngte.FaLy/AkVMLDboAjy"], ["created_at", "2021-03-04 11:44:00.848937"], ["updated_at", "2021-03-04 11:44:00.848937"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "679f5e8d-e24e-4147-8d0b-795836eba819"], ["exp", "2021-03-05 11:44:00"], ["user_id", 68]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.0ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:45:21 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$fUj/48XEK2wYHComCsWGKusXzTpNgvKAbtQqIJx39w8bPRUnj6faC"], ["created_at", "2021-03-04 11:45:21.541628"], ["updated_at", "2021-03-04 11:45:21.541628"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.8ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "48842070-3436-4ead-8dd6-dc22b2e09c80"], ["exp", "2021-03-05 11:45:21"], ["user_id", 69]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 31ms (Views: 0.4ms | ActiveRecord: 7.4ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:45:21 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$bbGOsQcqmkcTEgBI6N6nTu3L0gXPql0g5gPFIMvFiN0piLqTlYR7i"], ["created_at", "2021-03-04 11:45:21.565348"], ["updated_at", "2021-03-04 11:45:21.565348"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.8ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "f682df3c-c302-4ec5-a9dc-caddf6296c4a"], ["exp", "2021-03-05 11:45:21"], ["user_id", 70]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 9ms (Views: 0.5ms | ActiveRecord: 1.9ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "user@example.com"], ["created_at", "2021-03-04 11:45:21.576354"], ["updated_at", "2021-03-04 11:45:21.576354"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:45:21 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$SkYtgnVUA/SkTgNiVq1gru6PjD3uyRMqF78TKKu.Ra3uovl6fcGg2"], ["created_at", "2021-03-04 11:45:21.584080"], ["updated_at", "2021-03-04 11:45:21.584080"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 1.0ms | Allocations: 786)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["email", "user@example.com"], ["created_at", "2021-03-04 11:45:21.589219"], ["updated_at", "2021-03-04 11:45:21.589219"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:45:21 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$d19F5CNTmIGQ7BrxYq0zkeFZXvKxipeyjrpboT61uOMQnJ/mv9/gu"], ["created_at", "2021-03-04 11:45:21.595577"], ["updated_at", "2021-03-04 11:45:21.595577"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.9ms | Allocations: 773)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (4.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:45:56 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$VIzpDbjiKT9ujHBFZTtQ4uyWpKrr72ePosynsmlK.UbyRz/wFsjv2"], ["created_at", "2021-03-04 11:45:56.655436"], ["updated_at", "2021-03-04 11:45:56.655436"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.8ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "16c7dc6a-93b5-4661-99dc-bcf3a19cb698"], ["exp", "2021-03-05 11:45:56"], ["user_id", 75]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 30ms (Views: 0.4ms | ActiveRecord: 7.7ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:45:56 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$0yqLOmvaEKTCGQbr0kvBUu.o90LJAXqgNGR0J5OG.DCiAA3QBTnPu"], ["created_at", "2021-03-04 11:45:56.676937"], ["updated_at", "2021-03-04 11:45:56.676937"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "29b88942-2c73-4813-a7dc-6412cb769b60"], ["exp", "2021-03-05 11:45:56"], ["user_id", 76]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:46:12 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$N8D8Zxnke1oLSgSx.qnJsu20E145SN6i/ZrzRk0.UYfA89IpkCZ/2"], ["created_at", "2021-03-04 11:46:12.422481"], ["updated_at", "2021-03-04 11:46:12.422481"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "2bb7e851-e661-4a4c-abc8-ca2bbc1c72b8"], ["exp", "2021-03-05 11:46:12"], ["user_id", 77]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 28ms (Views: 0.4ms | ActiveRecord: 6.7ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:46:12 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$ZOaWWoJIgYfOi54usD4YFuH1ZNJyMmSDbfgXnS1pjtJvL1kdQidu6"], ["created_at", "2021-03-04 11:46:12.442797"], ["updated_at", "2021-03-04 11:46:12.442797"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "3bf4ed95-0e03-4227-82af-31593382e2bc"], ["exp", "2021-03-05 11:46:12"], ["user_id", 78]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.3ms | ActiveRecord: 1.4ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:46:12 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$VvUC4wibIJavzc.4QMlH9.DwTiAxXdcgS28wYZIYy4WU5nn1kLa0a"], ["created_at", "2021-03-04 11:46:12.456904"], ["updated_at", "2021-03-04 11:46:12.456904"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "e178a907-cd45-4626-bfa7-c73707f01a75"], ["exp", "2021-03-05 11:46:12"], ["user_id", 79]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:46:12 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$BE2kVHuepbYbHhRTao3xG./olQzgsDmFIbIoKIBDrVQ1/WyLB2dGS"], ["created_at", "2021-03-04 11:46:12.500757"], ["updated_at", "2021-03-04 11:46:12.500757"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "7b8224fd-de5d-4660-ab89-b3c532740b97"], ["exp", "2021-03-05 11:46:12"], ["user_id", 80]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.3ms | ActiveRecord: 1.3ms | Allocations: 1676)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:23 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$EkMqAsw4vk6rKfxksJK3VuXljFTaXtuMpBhjowqmfn.V7wK2cqaGm"], ["created_at", "2021-03-04 11:47:23.500184"], ["updated_at", "2021-03-04 11:47:23.500184"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "27a50174-ee0f-4332-8b27-520ec97240af"], ["exp", "2021-03-05 11:47:23"], ["user_id", 81]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 27ms (Views: 0.3ms | ActiveRecord: 6.0ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:23 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$xbLO9vLZko4cy8NNJkM1mOeBUVFMBeyNXLmsObhAE928yBAI4W.le"], ["created_at", "2021-03-04 11:47:23.518797"], ["updated_at", "2021-03-04 11:47:23.518797"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "099a5ee3-92a1-4a62-b3e5-f2453cdfb67d"], ["exp", "2021-03-05 11:47:23"], ["user_id", 82]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 1.0ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:23 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$EgX8Vv0dA20m6vQX5xtZu.n2EcD9hfQSuuXIOvPXjnIQCiAjRu1ce"], ["created_at", "2021-03-04 11:47:23.528949"], ["updated_at", "2021-03-04 11:47:23.528949"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "28382582-515d-4d7c-9a64-a1f995b2e07a"], ["exp", "2021-03-05 11:47:23"], ["user_id", 83]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.9ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:23 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$IAO1QOihA8ZP/Qa2aEY6vuP2ulD0kiwvtZA0ICGOP/9Lwhc3Gz28S"], ["created_at", "2021-03-04 11:47:23.547305"], ["updated_at", "2021-03-04 11:47:23.547305"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "7f32e10e-8ade-4958-a8c0-e89ea3bc3f0e"], ["exp", "2021-03-05 11:47:23"], ["user_id", 84]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.4ms | ActiveRecord: 1.2ms | Allocations: 1714)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:35 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$rj9je7ZfxdYvfsJjuZqBG.7uyKJQnuPze0pZdmLt94Sp4dSw6.vmy"], ["created_at", "2021-03-04 11:47:35.757679"], ["updated_at", "2021-03-04 11:47:35.757679"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.7ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "704052d9-5714-4a40-8b8f-4ac90e6315a7"], ["exp", "2021-03-05 11:47:35"], ["user_id", 85]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 32ms (Views: 0.4ms | ActiveRecord: 6.6ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:35 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$iuZUjLmtzR../MFySRhQ0utTuonYZitbNHL.Ao17siwoli94vcg7."], ["created_at", "2021-03-04 11:47:35.779840"], ["updated_at", "2021-03-04 11:47:35.779840"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "97a85f52-dab0-4e45-98ef-05f817235806"], ["exp", "2021-03-05 11:47:35"], ["user_id", 86]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.3ms | ActiveRecord: 1.2ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:35 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$uTkxscGqQjQkNXYxIac9UOBd7RKg6hLBn8QCsfdHy0jS5y0w5BHc2"], ["created_at", "2021-03-04 11:47:35.791450"], ["updated_at", "2021-03-04 11:47:35.791450"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "b319f25b-e29b-4014-9906-a2ec7d21a162"], ["exp", "2021-03-05 11:47:35"], ["user_id", 87]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 9ms (Views: 0.3ms | ActiveRecord: 1.9ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:35 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$9SCrwmJwKbZLojUA/TgxOur17HsnjPoMBZBe9mFwadNfTbnmGvTki"], ["created_at", "2021-03-04 11:47:35.820189"], ["updated_at", "2021-03-04 11:47:35.820189"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "5561c9c4-6fba-495c-a8b2-612e1b841f4d"], ["exp", "2021-03-05 11:47:35"], ["user_id", 88]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.3ms | ActiveRecord: 1.3ms | Allocations: 1714)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:52 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$A5aL38/FGvNib/R.JjUcROoiPKMpGdeReAsKPRsv0Z8B1l2XRHnoq"], ["created_at", "2021-03-04 11:47:52.957434"], ["updated_at", "2021-03-04 11:47:52.957434"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.6ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "c6d9fce1-a26f-437e-8e87-a8702c133fa0"], ["exp", "2021-03-05 11:47:52"], ["user_id", 89]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 31ms (Views: 0.4ms | ActiveRecord: 7.0ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:52 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$yatAxx.YC7rInxIxa8x2vOd9G7rl.LB.WMM4WCKvwzFdT7tvcBFye"], ["created_at", "2021-03-04 11:47:52.978480"], ["updated_at", "2021-03-04 11:47:52.978480"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "6d1b8438-6f8c-46bc-891a-cc3acda9b189"], ["exp", "2021-03-05 11:47:52"], ["user_id", 90]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.2ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:52 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$UplZUjakl3OZH.pc7X6Zu.y93GllLs2L.Rt7h9trxWNKpiKNmKBTK"], ["created_at", "2021-03-04 11:47:52.989310"], ["updated_at", "2021-03-04 11:47:52.989310"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "65a9b6f7-8c8a-4af2-8bef-e0ef859df6fd"], ["exp", "2021-03-05 11:47:52"], ["user_id", 91]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 1.1ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:47:53 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$kEFezL9DdOZN8NrqNRLn.u5Fn07hmISXjr.oq2OsoAY4znS1BUa.m"], ["created_at", "2021-03-04 11:47:53.008195"], ["updated_at", "2021-03-04 11:47:53.008195"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "b1d0a9fe-e4bf-4d78-89c6-35c59b674e6f"], ["exp", "2021-03-05 11:47:53"], ["user_id", 92]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 8ms (Views: 0.3ms | ActiveRecord: 1.5ms | Allocations: 1714)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:48:09 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$xAsvZ1ThmLSTH60P95JwIe9lxi94zDS1tmI9XIDw/hcYHMWP.Io1i"], ["created_at", "2021-03-04 11:48:09.982821"], ["updated_at", "2021-03-04 11:48:09.982821"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.9ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "3617b108-8f76-4a15-810e-d35cdb85181d"], ["exp", "2021-03-05 11:48:09"], ["user_id", 93]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 30ms (Views: 0.6ms | ActiveRecord: 7.5ms | Allocations: 13139)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:48:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$7nwyokVrA0Dksuu/MYZ2QOMJrtQTgs/IKgifwe4s81WoP9HLPOsCm"], ["created_at", "2021-03-04 11:48:10.006673"], ["updated_at", "2021-03-04 11:48:10.006673"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.3ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "7e94fd12-6b2d-49bd-9daf-b52cd55b0c5e"], ["exp", "2021-03-05 11:48:10"], ["user_id", 94]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:48:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$0fJOopXuv8qABq948yygpecEYlN0xJY.bkup3eh6uf0mypHB5Ga.q"], ["created_at", "2021-03-04 11:48:10.019627"], ["updated_at", "2021-03-04 11:48:10.019627"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "c3982625-87f4-4d0a-bfdc-86c16514835b"], ["exp", "2021-03-05 11:48:10"], ["user_id", 95]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.3ms | ActiveRecord: 1.2ms | Allocations: 1379)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/signup" for 127.0.0.1 at 2021-03-04 12:48:10 +0100
+Processing by RegistrationsController#create as HTML
+  Parameters: {"user"=>{"email"=>"user@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "user@example.com"], ["encrypted_password", "$2a$04$UoYL962Q7OSi2jA50HigEuLGyHofslBVlmyJ3I9SIx6ORh2VyJvZ6"], ["created_at", "2021-03-04 11:48:10.039914"], ["updated_at", "2021-03-04 11:48:10.039914"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mAllowlistedJwt Create (0.4ms)[0m  [1m[32mINSERT INTO "allowlisted_jwts" ("jti", "exp", "user_id") VALUES ($1, $2, $3) RETURNING "id"[0m  [["jti", "51fa2cb8-38a2-42e2-9852-27751d3d39a1"], ["exp", "2021-03-05 11:48:10"], ["user_id", 96]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 7ms (Views: 0.3ms | ActiveRecord: 1.1ms | Allocations: 1714)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
