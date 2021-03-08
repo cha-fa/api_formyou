@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_03_105927) do
+ActiveRecord::Schema.define(version: 2021_03_08_135542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,54 @@ ActiveRecord::Schema.define(version: 2021_03_03_105927) do
     t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "title", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "categories_courses", id: false, force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "course_id", null: false
+    t.index ["category_id"], name: "index_categories_courses_on_category_id"
+    t.index ["course_id"], name: "index_categories_courses_on_course_id"
+  end
+
+  create_table "classrooms", force: :cascade do |t|
+    t.string "title", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.bigint "teacher_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["teacher_id"], name: "index_courses_on_teacher_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.datetime "start_date"
+    t.bigint "course_id", null: false
+    t.bigint "classroom_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["classroom_id"], name: "index_sessions_on_classroom_id"
+    t.index ["course_id"], name: "index_sessions_on_course_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "student_id", null: false
+    t.integer "note"
+    t.bigint "session_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_id"], name: "index_subscriptions_on_session_id"
+    t.index ["student_id"], name: "index_subscriptions_on_student_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -32,9 +80,16 @@ ActiveRecord::Schema.define(version: 2021_03_03_105927) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.boolean "is_approved", default: false
+    t.string "role", default: "student"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
+  add_foreign_key "sessions", "classrooms"
+  add_foreign_key "sessions", "courses"
+  add_foreign_key "subscriptions", "sessions"
 end
