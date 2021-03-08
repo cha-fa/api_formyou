@@ -32,6 +32,10 @@ gem 'warden-jwt_auth', '0.4.2'
 gem 'fast_jsonapi'
 gem 'dotenv-rails'
 
+#Faker and table_print to inject dummy data in the DB
+gem 'faker', '~> 2.16'
+gem 'table_print', '~> 1.5', '>= 1.5.7'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'rspec-rails', '~> 4.0.2'
