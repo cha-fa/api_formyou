@@ -1,5 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :set_user
+  before_action :user_is_confirmed
   before_action :set_subscription, only: [:show, :update, :destroy]
   before_action :authenticate_user!
   before_action :check_if_allowed
@@ -18,8 +19,10 @@ class SubscriptionsController < ApplicationController
 
   # POST /subscriptions
   def create
+
     @subscription = Subscription.new(subscription_params)
     @subscription.student = current_user
+
     if @subscription.save
       render json: @subscription, status: :created, location: url_for([@user, @subscription])
     else

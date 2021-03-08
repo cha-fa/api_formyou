@@ -25,12 +25,23 @@ class ApplicationController < ActionController::API
     }, status: :bad_request
   end
 
+  def authenticate_admin
+    unless current_user.role === "admin" && current_user.is_approved
+      render json: {success: false, error: "You can't see this page"}, status: 401
+    end
+  end
+
+  def user_is_confirmed
+    unless current_user.is_approved
+      render json: {success: false, error: "You can't see this page"}, status: 401
+    end
+  end
 
   protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :password, :role)}
-    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:first_name, :last_name, :email, :password, :current_password)}
+    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:first_name, :last_name, :email, :password, :current_password, :role)}
   end
 
 end

@@ -1,5 +1,6 @@
 class ClassroomsController < ApplicationController
   before_action :set_classroom, only: [:show, :update, :destroy]
+  before_action :authenticate_admin, only: [:create, :update, :destroy]
 
   # GET /classrooms
   def index
@@ -48,4 +49,5 @@ class ClassroomsController < ApplicationController
     def classroom_params
       params.require(:classroom).permit(:title)
     end
+
 end
