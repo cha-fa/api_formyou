@@ -1,4 +1,9 @@
 class ApplicationController < ActionController::API
+  include ActionController::RequestForgeryProtection
+  protect_from_forgery with: :null_session
+
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   def render_resource(resource)
     if resource.errors.empty?
       render json: resource
@@ -19,4 +24,13 @@ class ApplicationController < ActionController::API
       ]
     }, status: :bad_request
   end
+
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name, :last_name, :email, :password, :role)}
+    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:first_name, :last_name, :email, :password, :current_password)}
+  end
+
 end

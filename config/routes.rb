@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :subscriptions
+  resources :sessions
+  resources :classrooms
+  resources :categories
+  resources :courses
+  resources :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   devise_for :users,
   path: '',
