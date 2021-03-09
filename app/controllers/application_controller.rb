@@ -27,11 +27,11 @@ class ApplicationController < ActionController::API
 
   def authenticate_admin
     unless current_user.role === "admin" && current_user.is_approved
-      render json: {success: false, error: "You can't see this page"}, status: 401
+      render json: {success: false, error: "You are not allowed to't see this page"}, status: 401
     end
   end
 
-  def user_is_confirmed
+  def user_is_approved
     unless current_user.is_approved
       render json: {success: false, error: "You can't see this page"}, status: 401
     end
@@ -45,3 +45,5 @@ class ApplicationController < ActionController::API
   end
 
 end
+
+kk

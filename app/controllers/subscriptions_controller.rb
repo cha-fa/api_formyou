@@ -1,8 +1,8 @@
 class SubscriptionsController < ApplicationController
   before_action :set_user
-  before_action :user_is_confirmed
-  before_action :set_subscription, only: [:show, :update, :destroy]
   before_action :authenticate_user!
+  before_action :user_is_approved
+  before_action :set_subscription, only: [:show, :update, :destroy]
   before_action :check_if_allowed
 
   # GET /subscriptions

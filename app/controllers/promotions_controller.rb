@@ -1,6 +1,8 @@
 class PromotionsController < ApplicationController
   before_action :set_promotion, only: [:show, :update, :destroy]
   before_action :authenticate_admin, only: [:create, :update, :destroy]
+  before_action :user_is_approved
+
 
   # GET /promotions
   def index

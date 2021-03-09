@@ -1,7 +1,7 @@
 class ClassroomsController < ApplicationController
   before_action :set_classroom, only: [:show, :update, :destroy]
   before_action :authenticate_admin, only: [:create, :update, :destroy]
-
+  before_action :user_is_approved
   # GET /classrooms
   def index
     @classrooms = Classroom.all
