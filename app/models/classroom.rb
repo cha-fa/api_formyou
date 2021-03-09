@@ -1,4 +1,4 @@
 class Classroom < ApplicationRecord
   validates :title, presence: true
-  has_many :sessions
+  has_many :promotions
 end
