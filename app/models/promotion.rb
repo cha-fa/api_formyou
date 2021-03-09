@@ -1,7 +1,7 @@
-class Session < ApplicationRecord
+class Promotion < ApplicationRecord
   belongs_to :course
   belongs_to :classroom
-  has_many :subscriptions
+  has_many :subscriptions, dependent: :destroy
 
   validates :start_date,
     presence: true,

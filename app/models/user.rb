@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :assigned_courses, foreign_key: 'teacher_id', class_name: "Course"
   has_many :subscriptions, foreign_key: 'student_id', class_name: "Subscription"
 
-  enum role: ["student", "admin", "teacher"]
+  enum role: { student: "student", admin: "admin", teacher: "teacher"}
 
   scope :teachers, -> {where(role: "teacher")}
   scope :students, -> {where(role: "student")}

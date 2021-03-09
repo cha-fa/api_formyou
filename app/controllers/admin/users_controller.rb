@@ -4,4 +4,7 @@ class Admin::UsersController < Admin::BaseController
 
     render json: @users
   end
+
+  private
+
 end
