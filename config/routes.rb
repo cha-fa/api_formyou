@@ -1,13 +1,4 @@
 Rails.application.routes.draw do
-
-  resources :promotions
-  resources :classrooms
-  resources :categories
-  resources :courses
-  resources :users do
-    resources :subscriptions
-  end
-
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   devise_for :users,
   path: '',
@@ -22,6 +13,19 @@ Rails.application.routes.draw do
   }
 
   namespace :api, defaults: { format: :json } do
-      get '/profile', to: "profile#show"
+    get '/profile', to: "profile#show"
   end
+  namespace :admin do
+    resources :users, only: [:index, :update]
+  end
+
+  resources :promotions
+  resources :classrooms
+  resources :categories
+  resources :courses
+  resources :users, only: [:show] do
+    resources :subscriptions
+  end
+
+
 end

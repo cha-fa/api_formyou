@@ -15,8 +15,9 @@ class User < ApplicationRecord
 
   enum role: { student: "student", admin: "admin", teacher: "teacher"}
 
-  scope :teachers, -> {where(role: "teacher")}
-  scope :students, -> {where(role: "student")}
+  scope :to_review, -> { where(is_reviewed: false) }
+  scope :teachers, -> { where(role: "teacher") }
+  scope :students, -> { where(role: "student") }
 
   after_create :send_welcome_email
 
