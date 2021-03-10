@@ -19,14 +19,21 @@ class SubscriptionsController < ApplicationController
 
   # POST /subscriptions
   def create
+    @promotion = Promotion.find(params[:promotion_id])
 
-    @subscription = Subscription.new(subscription_params)
-    @subscription.student = current_user
-
-    if @subscription.save
-      render json: @subscription, status: :created, location: url_for([@user, @subscription])
+    if @promotion.is_full?
+      render :json => { errors: "No remaining seat for this date, please choose another." }, :status => 401
+    elsif current_user.subscriptions.where(promotion: @promotion).any?
+      render :json => { errors: "You are already subscribed to this date." }, :status => 401
     else
-      render json: @subscription.errors, status: :unprocessable_entity
+      @subscription = Subscription.new(subscription_params)
+      @subscription.student = current_user
+
+      if @subscription.save
+        render json: @subscription, status: :created, location: url_for([@user, @subscription])
+      else
+        render json: { errors: @subscription.errors.full_messages }, status: :unprocessable_entity
+      end
     end
   end
 
@@ -56,7 +63,7 @@ class SubscriptionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def subscription_params
-      params.require(:subscription).permit(:user_id, :note, :promotion)
+      params.require(:subscription).permit(:user_id, :note, :promotion_id)
     end
 
     def check_if_allowed

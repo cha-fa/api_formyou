@@ -12,6 +12,7 @@ class User < ApplicationRecord
 
   has_many :assigned_courses, foreign_key: 'teacher_id', class_name: "Course"
   has_many :subscriptions, foreign_key: 'student_id', class_name: "Subscription"
+  has_many :promotions, through: :subscriptions
 
   enum role: { student: "student", admin: "admin", teacher: "teacher"}
 
@@ -20,6 +21,9 @@ class User < ApplicationRecord
   scope :students, -> { where(role: "student") }
 
   after_create :send_welcome_email
+
+
+  private
 
   def send_welcome_email
     UserMailer.welcome_email(self).deliver_now
