@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     patch "/profile", to: "profile#update"
   end
   namespace :admin do
-    resources :users, only: [:index, :update]
+    resources :users, only: [:index, :update, :destroy]
   end
 
   resources :promotions
