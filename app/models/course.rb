@@ -5,8 +5,6 @@ class Course < ApplicationRecord
 
   validates :title, presence: true
 
-  def self.sort_by_categories
-
-  end
+  scope :teacher, -> (teacher_id) { where("teacher_id = ?", teacher_id) }
 
 end
