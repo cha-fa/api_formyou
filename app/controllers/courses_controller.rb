@@ -4,8 +4,11 @@ class CoursesController < ApplicationController
 
   # GET /courses
   def index
-    @courses = Course.all
-
+    if params[:teacher_id]
+      @courses = Course.teacher(params[:teacher_id])
+    else
+      @courses = Course.all
+    end
     render json: @courses
   end
 

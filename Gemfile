@@ -50,8 +50,13 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'letter_opener'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+<<<<<<< HEAD
 gem 'pry'
+=======
+gem 'mailjet', :git => 'https://github.com/mailjet/mailjet-gem.git'
+>>>>>>> 64e475f5f0f9eab078305b1a65253c8f40726762
