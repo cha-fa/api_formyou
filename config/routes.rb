@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   resources :promotions
   resources :classrooms
   resources :categories
-  resources :courses
+  resources :courses do
+    resources :promotions, only: [:index]
+  end
   resources :users, only: [:show] do
     resources :subscriptions
   end

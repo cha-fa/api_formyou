@@ -6,14 +6,19 @@ class PromotionsController < ApplicationController
 
   # GET /promotions
   def index
-    @promotions = Promotion.all
-
-    render json: @promotions
+    if params[:course_id]
+      @course = Course.find(params[:course_id])
+      @promotions = @course.promotions
+    else
+      @promotions = Promotion.all
+    end
+    @detailed_promotions = @promotions.map{ |promo| promo.with_details }
+    render json: @detailed_promotions
   end
 
   # GET /promotions/1
   def show
-    render json: @promotion
+    render json: @promotion.with_details
   end
 
   # POST /promotions
