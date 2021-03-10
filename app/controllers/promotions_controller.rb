@@ -11,7 +11,6 @@ class PromotionsController < ApplicationController
     else
       @promotions = Promotion.all
     end
-
     render json: @promotions
   end
 
