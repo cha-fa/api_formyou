@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     get '/profile', to: "profile#show"
   end
   namespace :admin do
-    resources :users, only: [:index, :update]
+    resources :users, only: [:index, :update, :destroy]
   end
 
   resources :promotions
