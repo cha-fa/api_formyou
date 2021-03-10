@@ -85,7 +85,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!(Classroom.table_name)
   Course.create(
     title: Faker::Hacker.noun,
     content: Faker::Lorem.paragraph(sentence_count: 6, supplemental: true),
-    teacher: User.teachers.sample)
+    teacher: User.teachers.first)
 end
 
 puts "-------------------- Course table --------------------"
@@ -104,7 +104,7 @@ tp Classroom.all
   10.times do |promotion|
     Promotion.create(
       start_date: Faker::Date.between(from: Date.today, to: Date.today + 600.days),
-      course: Course.all.sample,
+      course: Course.first,
       classroom: Classroom.all.sample)
   end
 
@@ -138,3 +138,13 @@ tp Category.all
 20.times do |categoryCourse|
   Course.all.sample.categories << Category.all.sample
 end
+
+Course.all.map{ |course|
+ 10.times do |promotion|
+   Promotion.create(
+     start_date: Faker::Date.between(from: Date.today, to: Date.today + 600.days),
+     course: course,
+     classroom: Classroom.all.sample)
+ end
+}
+tp Promotion.all

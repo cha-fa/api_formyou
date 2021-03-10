@@ -6,7 +6,11 @@ class PromotionsController < ApplicationController
 
   # GET /promotions
   def index
-    @promotions = Promotion.all
+    if params[:teacher_id]
+      @promotions = Promotion.teacher(params[:teacher_id])
+    else
+      @promotions = Promotion.all
+    end
 
     render json: @promotions
   end
