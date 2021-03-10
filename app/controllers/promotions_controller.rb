@@ -17,11 +17,12 @@ class PromotionsController < ApplicationController
   # GET /promotions/1
   def show
     if params[:student]
-      @promotion = @promotion.students
-    elsif params[:subscription]
-      @promotion = @promotion.subscriptions
+      @students = @promotion.students
     end
-    render json: @promotion
+    if params[:subscription]
+      @subscriptions = @promotion.subscriptions
+    end
+      render json: {promotion: @promotion, course: @promotion.course, subscriptions: @subscriptions}
   end
 
   # POST /promotions

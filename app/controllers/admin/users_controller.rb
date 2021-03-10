@@ -9,6 +9,10 @@ class Admin::UsersController < Admin::BaseController
     render json: @users
   end
 
+  def show
+    render json: @user
+  end
+  
   def update
     if @user.update(user_params)
       @user.update(is_reviewed: true)
