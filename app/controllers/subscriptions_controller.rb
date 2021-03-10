@@ -60,7 +60,7 @@ class SubscriptionsController < ApplicationController
     end
 
     def check_if_allowed
-      unless current_user == @user || current_user.role === "admin"
+      unless current_user == @user || current_user.role === "admin" || current_user.role === "teacher"
         render json: {success: false, error: "You can't see this page"}, status: 401
       end
     end
