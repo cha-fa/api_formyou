@@ -18,7 +18,9 @@ class PromotionsController < ApplicationController
   def show
     if params[:student]
       @promotion = @promotion.students
-    end  
+    elsif params[:subscription]
+      @promotion = @promotion.subscriptions
+    end
     render json: @promotion
   end
 
