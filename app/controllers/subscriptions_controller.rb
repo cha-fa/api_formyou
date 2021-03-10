@@ -19,8 +19,6 @@ class SubscriptionsController < ApplicationController
 
   # POST /subscriptions
   def create
-    puts "/////"
-    puts params[:promotion_id]
     @promotion = Promotion.find(params[:promotion_id])
 
     if @promotion.is_full?
