@@ -7,7 +7,7 @@ class PromotionsController < ApplicationController
   # GET /promotions
   def index
     if params[:teacher_id]
-      @promotions = Promotion.teacher(params[:teacher_id])
+      @promotions = Promotion.teacher(params[:teacher_id]) 
     else
       @promotions = Promotion.all
     end
@@ -16,6 +16,9 @@ class PromotionsController < ApplicationController
 
   # GET /promotions/1
   def show
+    if params[:student]
+      @promotion = @promotion.students
+    end  
     render json: @promotion
   end
 
