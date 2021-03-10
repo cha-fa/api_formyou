@@ -13,6 +13,10 @@ class Promotion < ApplicationRecord
     return MAXIMUM_CAPACITY - self.subscriptions.size
   end
 
+  def with_details
+    self.attributes.merge(remaining_seats: self.remaining_seats, course_title: self.course.title, clean_start_date: self.clean_start_date, teacher_name: self.course.teacher.first_name)
+  end
+
   def is_full?
     self.remaining_seats < 1 ? true : false
   end

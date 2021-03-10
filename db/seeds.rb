@@ -103,7 +103,7 @@ tp Classroom.all
 
 
 Course.all.each do |course|
-  20.times do |promotion|
+  10.times do |promotion|
     Promotion.create(
       start_date: Faker::Date.between(from: Date.today, to: Date.today + 30.days),
       course: course,
