@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-    # Include default devise modules. Others available are:
+  # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable :recoverable, :rememberable, :validatable and :omniauthable
 
   include Devise::JWT::RevocationStrategies::Allowlist
@@ -28,4 +28,5 @@ class User < ApplicationRecord
   def send_welcome_email
     UserMailer.welcome_email(self).deliver_now
   end
+
 end

@@ -13,10 +13,11 @@ Rails.application.routes.draw do
   }
 
   namespace :api, defaults: { format: :json } do
-    get '/profile', to: "profile#show"
+    get "/profile", to: "profile#show"
+    patch "/profile", to: "profile#update"
   end
   namespace :admin do
-    resources :users, only: [:index, :update]
+    resources :users, only: [:index, :update, :destroy]
   end
 
   resources :promotions
