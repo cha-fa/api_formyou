@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :update, :destroy]
     resources :categories
     resources :promotions
+    resources :classrooms
   end
 
   resources :promotions, only: [:show, :index]
