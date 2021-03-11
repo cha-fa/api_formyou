@@ -4,8 +4,9 @@ class CategoriesController < ApplicationController
   # GET /categories
   def index
     @categories = Category.all
+    @categories_details = @categories.map{|category| {category:category, courses: category.courses}}
 
-    render json: @categories
+    render json: @categories_details
   end
 
   # GET /categories/1
