@@ -1,3 +1,5 @@
+require 'pry'
+
 class Admin::CoursesController < Admin::BaseController
   before_action :set_course, only: [:show, :update, :destroy]
 
@@ -18,6 +20,7 @@ class Admin::CoursesController < Admin::BaseController
     params[:category_ids].each do |id|
       @course.categories << Category.find(id)
     end
+    binding.pry
     if @course.save
       render json: @course, status: :created, location: @course
     else
@@ -27,6 +30,10 @@ class Admin::CoursesController < Admin::BaseController
 
   # PATCH/PUT /courses/1
   def update
+    params[:category_ids].each do |id|
+      @course.categories << Category.find(id)
+    end
+    binding.pry
     if @course.update(course_params)
       render json: @course
     else
