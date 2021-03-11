@@ -1,8 +1,8 @@
-Salut <%= @user.first_name %> <%= @user.last_name %> et bienvenue chez nous !
-==========================================================
+Hi <%= @user.first_name %> <%= @user.last_name %> welcome at Form You!
  
-Tu t'es inscrit sur FormYou en utilisant l'e-mail suivant : <%= @user.email %>.
+You have used the following email: "<%= @user.email %>" to register.
  
-Pour accéder à tes cours, connecte-toi via : .
- 
-À très vite sur FormYou !
+An administrator is reviewing your registration. You will recieve a new mail as soon as you've been approved.
+Enjoy the available informations on courses at <a href=<%= ENV['PROFILE_URL'] %>><%= ENV['PROFILE_URL'] %></a>
+
+Cheers and visit us soon!
