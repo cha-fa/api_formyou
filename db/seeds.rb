@@ -109,7 +109,7 @@ Course.create(
     "Are you interested in making web pages? Look no further! In this course, you will learn how to use HTML5 and CSS3, the two types of code upon which all websites are based.
 
     You don't need to have any programming skills yet in order to take this course! HTML and CSS are great entry points to the world of code and are necessary languages for any developer or web designer to know. Create your page's content with HTML, and make it look great with CSS. You'll learn all about these two languages and how they work together to render all your favorite websites.",
-  teacher: User.teachers.sample,
+  teacher: User.find_by(email: 'teacher@yopmail.com'),
 )
 
 Course.create(
@@ -178,6 +178,12 @@ tp Classroom.all
 
 #Generate promotions
 
+Promotion.create(
+  start_date: Date.today - 60.days,
+  course: Course.find_by(title: 'Build Your First Web Pages With HTML and CSS'),
+  classroom: Classroom.all.sample,
+)
+
 Course.all.each do |course|
   10.times do |promotion|
     Promotion.create(
@@ -209,8 +215,14 @@ tp Promotion.all
   Subscription.create(
     promotion: Promotion.past.sample,
     student: User.find_by(email: 'student@yopmail.com'),
+    note: [5, 9, 7, 2, 10].sample,
   )
 end
+
+Subscription.create(
+  promotion: Promotion.first,
+  student: User.find_by(email: 'student@yopmail.com'),
+)
 
 4.times do |subscription|
   Subscription.create(

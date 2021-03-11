@@ -4,8 +4,6 @@ class Promotion < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_many :students, through: :subscriptions
 
-  validates :start_date, presence: true, if: :future_date
-
   scope :teacher,
         ->(teacher_id) {
           joins(:course).where('courses.teacher_id = ?', teacher_id)
