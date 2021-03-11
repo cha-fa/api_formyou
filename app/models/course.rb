@@ -5,4 +5,6 @@ class Course < ApplicationRecord
 
   validates :title, presence: true
 
+  scope :teacher, -> (teacher_id) { where("teacher_id = ?", teacher_id) }
+
 end
