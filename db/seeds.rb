@@ -85,7 +85,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!(Classroom.table_name)
   Course.create(
     title: Faker::Hacker.noun,
     content: Faker::Lorem.paragraph(sentence_count: 6, supplemental: true),
-    teacher: User.teachers.first)
+    teacher: User.teachers.sample)
 end
 
 puts "-------------------- Course table --------------------"

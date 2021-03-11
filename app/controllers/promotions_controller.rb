@@ -20,9 +20,6 @@ class PromotionsController < ApplicationController
 
   # GET /promotions/1
   def show
-    if params[:student]
-      @students = @promotion.students
-    end
     if params[:subscription]
       @subscriptions = @promotion.subscriptions
       @detailed_subscriptions = @subscriptions.map{ |sub| {subscription: sub, student: sub.student} }
