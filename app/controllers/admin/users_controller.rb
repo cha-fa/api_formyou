@@ -18,6 +18,11 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
+  def destroy
+   @user.destroy
+  end 
+      
+
   private
 
   def set_user
