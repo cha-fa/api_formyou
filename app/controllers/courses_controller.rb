@@ -6,8 +6,18 @@ class CoursesController < ApplicationController
   def index
     if params[:teacher_id]
       @courses = Course.teacher(params[:teacher_id])
-    else
-      @courses = Course.all
+    elsif params[:categories]
+      @category_ids = params[:categories].split(',')
+      @courseslist = []
+      @category_ids.each do |id|
+        Course.all.each do |course| 
+          if course.categories.include?(Category.find(id))
+            @courseslist << course
+          end
+        end
+      end
+      @courses = @courseslist.uniq
+    else @courses = Course.all
     end
     render json: @courses
   end
@@ -50,7 +60,7 @@ class CoursesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def course_params
-      params.require(:course).permit(:title, :content, :teacher_id)
+      params.require(:course).permit(:title, :content, :categories)
     end
 
 end
