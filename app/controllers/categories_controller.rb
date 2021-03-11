@@ -3,7 +3,12 @@ class CategoriesController < ApplicationController
   before_action :authenticate_admin, only: [:create, :update, :destroy]
   # GET /categories
   def index
-    @categories = Category.all
+    if params[:categories]
+      puts params[:categories]
+    else
+      @categories = Category.all
+    end
+
     @categories_details = @categories.map{|category| {category:category, courses: category.courses}}
 
     render json: @categories_details
@@ -47,6 +52,6 @@ class CategoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def category_params
-      params.require(:category).permit(:title)
+      params.require(:category).permit(:title, :categories)
     end
 end
