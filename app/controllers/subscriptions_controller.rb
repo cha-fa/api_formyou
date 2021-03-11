@@ -7,8 +7,11 @@ class SubscriptionsController < ApplicationController
 
   # GET /subscriptions
   def index
-    @subscriptions = @user.subscriptions
-
+    if params[:student]
+      @subscriptions = @user.subscriptions.map{|sub| {subscription: sub, promotion:sub.promotion, course: sub.promotion.course, seat_left: sub.promotion.remaining_seats}}
+    else
+      @subscriptions = @user.subscriptions
+    end
     render json: @subscriptions
   end
 
