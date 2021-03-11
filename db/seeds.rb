@@ -144,3 +144,18 @@ tp Category.all
 20.times do |categoryCourse|
   Course.all.sample.categories << Category.all.sample
 end
+
+Course.all.map{ |course|
+ 5.times do |promotion|
+   Promotion.create(
+     start_date: Faker::Date.between(from: Date.today, to: Date.today + 30.days),
+     course: course,
+     classroom: Classroom.all.sample)
+ end
+}
+tp Promotion.all
+
+4.times do |sessions|
+  Subscription.create(student: User.students.sample, promotion: Promotion.first)
+end
+tp Subscription.all
