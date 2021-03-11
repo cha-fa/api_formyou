@@ -20,12 +20,13 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :update, :destroy]
     resources :categories
     resources :courses
+    resources :promotions
   end
 
-  resources :promotions
-  resources :classrooms
-  resources :categories
-  resources :courses do
+  resources :promotions, only: [:show, :index]
+  resources :classrooms, only: [:show, :index]
+  resources :categories, only: [:show, :index]
+  resources :courses, only: [:show, :index] do
     resources :promotions, only: [:index]
   end
   resources :users, only: [:show] do
