@@ -1,10 +1,18 @@
 class UserMailer < ApplicationMailer
   default from: 'admin-formyou@yopmail.com'
+  
+  @url = "https://formyou.herokuapp.com/"
 
   def welcome_email(user)
     @user = user
     mail(from: "admin-formyou@yopmail.com", to: @user.email,
-          subject: "email de bienvenue")
+          subject: "welcome email")
+  end
+
+  def email_approval(user)
+    @user = user
+    mail(from: "admin-formyou@yopmail.com", to: @user.email,
+          subject: "your account has been approved")
   end
 
   def suscription_confirmation_email(subscription)

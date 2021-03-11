@@ -1,4 +1,4 @@
-# Rails boilerplate
+# Rails Api to the Form You app.
 
 ##### Can be used with the [associated React frontend](https://github.com/cha-fa/react_boilerplate)
 
@@ -9,7 +9,8 @@
 * Devise-jwt '0.7.0' (Allowlist Revocation Strategy)  
 * Rspec-rails '4.0.2'  
 * Factory_bot_rails '6.1'  
-
+* Mailjet (in production)
+* letter opener (in development)
 
 ## Usage
 
@@ -21,3 +22,13 @@ Create a .env with `DEVISE_JWT_SECRET_KEY="yoursecretkey"`
 `rails server`  
 Your app will be running on `http://localhost:8080`  
 
+## Production 
+ visit the app (https://formyou.herokuapp.com/)
+
+## Routes
+
+after cloning this repository, if you when to use specific routes for this api, please use 
+`rails routes`
+Remember that you will need an authentication token to fetch your data.
+
+### Enjoy!
