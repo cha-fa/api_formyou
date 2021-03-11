@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: [:index, :update, :destroy]
     resources :categories
+    resources :courses
   end
 
   resources :promotions
