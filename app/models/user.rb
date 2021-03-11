@@ -23,8 +23,8 @@ class User < ApplicationRecord
   scope :teachers, -> { where(role: 'teacher') }
   scope :students, -> { where(role: 'student') }
 
-  # after_create :send_welcome_email
-  # after_update :send_email_approval
+  after_create :send_welcome_email
+  after_update :send_email_approval
 
   private
 
