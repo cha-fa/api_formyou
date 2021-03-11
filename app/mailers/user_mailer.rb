@@ -1,5 +1,7 @@
 class UserMailer < ApplicationMailer
   default from: 'admin-formyou@yopmail.com'
+  
+  @url = "https://formyou.herokuapp.com/"
 
   def welcome_email(user)
     @user = user

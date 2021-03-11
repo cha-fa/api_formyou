@@ -3,6 +3,7 @@ Hi <%= @user.first_name %> <%= @user.last_name %> welcome at Form You!
 You have used the following email: "<%= @user.email %>" to register.
  
 An administrator is reviewing your registration. You will recieve a new mail as soon as you've been approved.
-Enjoy the available informations on courses at <a href=<%= ENV['PROFILE_URL'] %>><%= ENV['PROFILE_URL'] %></a>
+Enjoy the available informations on courses at <a href=<%= @url %>>Form You</a>.
+Your Profile will be at <a href=<%= ENV['PROFILE_URL'] %>><%= ENV['PROFILE_URL'] %></a>
 
 Cheers and visit us soon!
