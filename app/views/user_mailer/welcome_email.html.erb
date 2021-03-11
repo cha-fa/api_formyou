@@ -3,13 +3,15 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Salut <%= @user.first_name %> <%= @user.last_name %> et bienvenue chez nous !</h1>
+    <h1>Hi <%= @user.first_name %> <%= @user.last_name %> welcome at Form You!</h1>
     <p>
-      Tu t'es inscrit sur FormYou en utilisant l'e-mail suivant : <%= @user.email %>.
+      You have used the following email: "<%= @user.email %>" to register.
     </p>
     <p>
-      Pour accéder à tes cours, connecte-toi via : .
+      An administrator is reviewing your registration. You will recieve a new mail as soon as you've been approved.
     </p>
-    <p> À très vite sur FormYou!
+    <p>Enjoy the available informations on courses at <a href=<%= @url %>>Form You</a></p>
+    <p>Your Profile will be at <a href=<%= ENV['PROFILE_URL'] %>><%= ENV['PROFILE_URL'] %></a></p>
+    <p>Cheers and visit us soon!</p>
   </body>
 </html>

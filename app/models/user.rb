@@ -24,10 +24,15 @@ class User < ApplicationRecord
   scope :students, -> { where(role: 'student') }
 
   # after_create :send_welcome_email
+  # after_update :send_email_approval
 
   private
 
   def send_welcome_email
     UserMailer.welcome_email(self).deliver_now
+  end
+
+  def send_email_approval
+    UserMailer.email_approval(self).deliver_now
   end
 end
