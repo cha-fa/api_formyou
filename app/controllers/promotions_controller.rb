@@ -8,10 +8,14 @@ class PromotionsController < ApplicationController
   def index
     if params[:teacher_id]
       @promotions = Promotion.teacher(params[:teacher_id]) 
+    elsif params[:course_id]
+      @course = Course.find(params[:course_id])
+      @promotions = @course.promotions
     else
       @promotions = Promotion.all
     end
-    render json: @promotions
+    @detailed_promotions = @promotions.map{ |promo| promo.with_details }
+    render json: @detailed_promotions
   end
 
   # GET /promotions/1
@@ -21,8 +25,10 @@ class PromotionsController < ApplicationController
     end
     if params[:subscription]
       @subscriptions = @promotion.subscriptions
+      @detailed_subscriptions = @subscriptions.map{ |sub| {subscription: sub, student: sub.student} }
     end
-      render json: {promotion: @promotion, course: @promotion.course, subscriptions: @subscriptions}
+
+      render json: {promotion: @promotion.with_details, course: @promotion.course, subscriptions: @detailed_subscriptions}
   end
 
   # POST /promotions

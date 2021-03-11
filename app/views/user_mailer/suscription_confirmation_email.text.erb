@@ -1,8 +1,6 @@
-alut <%= @user.first_name %> <%= @user.last_name %> et bienvenue chez nous !
-==========================================================
- 
-Tu t'es inscrit une formation sur FormYou en utilisant l'e-mail suivant : <%= @user.email %>.
- 
-Pour accéder à tes cours, connecte-toi via : .
- 
-À très vite sur FormYou !
+Hello <%= @user.first_name %> <%= @user.last_name %>!
+
+You just signed up for the course "<%= @course.title %>"" on FormYou which will be held on <%= @promotion.clean_start_date %>.
+You can manage your registrations on <a href=<%= ENV['PROFILE_URL'] %>><%= ENV['PROFILE_URL'] %></a>
+
+Have a nice day!
